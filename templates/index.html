@@ -1,37 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barcode Scanner</title>
     <script src="{{ url_for('static', filename='html5-qrcode.min.js') }}"></script>
-    <style>
-        #reader { width: 100%; margin: auto; }
-        #result { font-size: 18px; margin-top: 20px; color: green; text-align: center; }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2 style="text-align:center;">📱 Scan Barcode</h2>
-    <div id="reader"></div>
-    <div id="result"></div>
+  <h1>📦 Barcode Scanner</h1>
 
-    <script>
-        function onScanSuccess(decodedText, decodedResult) {
-            document.getElementById('result').innerText = "Scanned: " + decodedText;
+  <button id="start-btn">Start Scan</button>
+  <button id="stop-btn" style="display: none;">Stop Scan</button>
 
-            fetch('/scan', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ barcode: decodedText })
-            }).then(res => res.json()).then(data => {
-                console.log("Server says:", data);
-            });
-        }
+  <div id="loading">📷 Starting camera...</div>
+  <div id="reader" style="display: none;"></div>
 
-        const html5QrCode = new Html5Qrcode("reader");
-        html5QrCode.start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: { width: 250, height: 250 } },
-            onScanSuccess
-        );
-    </script>
+  <div id="result-box" style="display: none;">
+    <p id="result">Scanned Code: </p>
+    <button id="copy-btn">Copy Code</button>
+  </div>
+
+  <footer>
+    Use in a well-lit area • Hold barcode steady
+  </footer>
+
+  <script src="/static/script.js"></script>
 </body>
 </html>

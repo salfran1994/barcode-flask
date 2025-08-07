@@ -14,4 +14,4 @@ def scan():
     return jsonify({'status': 'success', 'message': 'Barcode received', 'data': barcode})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run()
